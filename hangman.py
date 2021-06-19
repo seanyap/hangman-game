@@ -42,7 +42,9 @@ def main():
     print("Welcome to Hangman Game!\n")
     word = input("Please enter a word: ").lower()
 
-    # TODO check if word input is valid 
+    # check if word input is valid 
+    while not word.isalpha():
+        word = input("Please enter a valid word: ").lower()
 
     letters_pending = word_to_dict(word) # a dict with key: letter, value: list of indexes where letter is found
     indexes_found = set() # a set with all letter indexes found by user
@@ -53,7 +55,9 @@ def main():
         print(f"You have {tries} tries!")
         letter = input("Guess a letter: ")
 
-        # TODO check if letter input is valid
+        # check if letter input is valid
+        while (not letter.isalpha()) or len(letter) > 1:
+            letter = input("Guess a valid letter: ")
 
         if check_guess(letter, letters_pending, indexes_found):
             print("\nYou found a letter!")
