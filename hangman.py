@@ -35,12 +35,14 @@ def display_word_status(word, indexes_found):
             status.append(word[i])
         else:
             status.append('_')
-    print(str(status), '\n')
+    print('\n[', " ".join(status), '] \n')
 
 
 def main():
     print("Welcome to Hangman Game!\n")
-    word = input("Please enter a word: ")
+    word = input("Please enter a word: ").lower()
+
+    # TODO check if word input is valid 
 
     letters_pending = word_to_dict(word) # a dict with key: letter, value: list of indexes where letter is found
     indexes_found = set() # a set with all letter indexes found by user
@@ -51,10 +53,12 @@ def main():
         print(f"You have {tries} tries!")
         letter = input("Guess a letter: ")
 
+        # TODO check if letter input is valid
+
         if check_guess(letter, letters_pending, indexes_found):
-            print("You found a letter!\n")
+            print("\nYou found a letter!")
         else: 
-            print("Incorrect letter. Try again!\n")
+            print("\nIncorrect letter. Try again!")
             tries -= 1
 
         # empty dict means we found all letters
@@ -64,6 +68,8 @@ def main():
 
     if tries == 0:
         print("You lost, better luck next time...")
+
+    # TODO catch keyboard interrupt ctrl^c exit
 
 if __name__ == "__main__":
     main()
