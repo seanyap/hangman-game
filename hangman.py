@@ -1,6 +1,6 @@
 
 def word_to_dict(word):
-    """word_to_dict converts a string to a dictionary: key = letter,
+    """This function converts a string to a dictionary: key = letter,
     value = list of indexes where letter is found"""
     word_dict = {}
     for count,letter in enumerate(word):
@@ -11,7 +11,7 @@ def word_to_dict(word):
     return word_dict
 
 def check_guess(letter, letters_pending, letters_found):
-    """check_guess checks to see if user guess the correct letter"""
+    """This function checks to see if user guess the correct letter"""
 
     # correct guess
     if letter in letters_pending:
@@ -27,8 +27,15 @@ def check_guess(letter, letters_pending, letters_found):
     return False
 
 
-def display_word_status(word_found):
-    pass
+def display_word_status(word, indexes_found):
+    """This function displays the letters that user found and underscores for letters remain to be found"""
+    status = []
+    for i in range(len(word)):
+        if i in indexes_found:
+            status.append(word[i])
+        else:
+            status.append('_')
+    print(str(status), '\n')
 
 
 def main():
@@ -36,24 +43,24 @@ def main():
     word = input("Please enter a word: ")
 
     letters_pending = word_to_dict(word) # a dict with key: letter, value: list of indexes where letter is found
-    letters_found = set() # a set with all letter indexes found by user
+    indexes_found = set() # a set with all letter indexes found by user
 
     tries = 6
     while tries > 0:
+        display_word_status(word, indexes_found)
         print(f"You have {tries} tries!")
-        letter = input("Guess a letter")
+        letter = input("Guess a letter: ")
 
-        if check_guess(letter, letters_pending, letters_found):
-            print("You found a letter!")
+        if check_guess(letter, letters_pending, indexes_found):
+            print("You found a letter!\n")
         else: 
-            print("Incorrect letter. Try again!")
+            print("Incorrect letter. Try again!\n")
             tries -= 1
-
-        display_word_status(letters_found)
 
         # empty dict means we found all letters
         if not letters_pending:
             print("Congratulations, you won!")
+            break
 
     if tries == 0:
         print("You lost, better luck next time...")
